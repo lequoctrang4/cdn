@@ -71,16 +71,27 @@ image-assets/
 
 ### Bucket Policy (cho public read)
 
+Bucket KHÔNG public, chỉ CloudFront được phép truy cập.
+
+Bucket Policy (CloudFront Only – OAC)
+
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "PublicReadGetObject",
+      "Sid": "AllowCloudFrontReadOnly",
       "Effect": "Allow",
-      "Principal": "*",
+      "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+      },
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::my-cdn-assets/*"
+      "Resource": "arn:aws:s3:::my-cdn-assets/*",
+      "Condition": {
+        "StringEquals": {
+          "AWS:SourceArn": "arn:aws:cloudfront::ACCOUNT_ID:distribution/DISTRIBUTION_ID"
+        }
+      }
     }
   ]
 }
