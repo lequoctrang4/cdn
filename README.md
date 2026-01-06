@@ -358,3 +358,7 @@ cwebp -q 80 input.jpg -o output.webp
 ## 📄 License
 
 MIT License - Free to use for personal and commercial projects.
+
+aws cloudfront create-invalidation \
+ --distribution-id E12X47GIYES1II \
+ --paths "/README.md"
